@@ -31,16 +31,15 @@ exports.handler = async (event) => {
       const snsMessage = JSON.parse(record.Sns.Message);
       const userEmail = snsMessage.user_email;
       const userId = snsMessage.user_id;
-      const expirationTimestamp = Math.floor(Date.now() / 1000) + 120;
 
-      const verificationLink = `http://${baseURL}/v1/user/self/verify?token=${userId}&expires=${expirationTimestamp}`;
+      const verificationLink = `http://${baseURL}/v1/user/self/verify?token=${userId}`;
 
       const msg = {
         to: userEmail,
-        from: "amargithub@gmail.com",
+        from: `noreply@${baseURL}`,
         subject: "CSYE6225 Webapp - Verify Your Email",
         html: `<p>Dear User,<br>Please verify your email by <a href="${verificationLink}">clicking here</a>. This link expires in 2 minutes.
-        <br>Thanks, <br>
+        <br><br>Thanks, <br>
         Amar Nagargoje</p>`,
       };
 
