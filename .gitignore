@@ -1,0 +1,8 @@
+.DS_Store
+deployment_package
+.env
+csye6225application.log
+node_modules/
+test.json
+package-lock.json
+verify_user.test.js
