@@ -24,19 +24,20 @@ const logger = winston.createLogger({
 });
 
 exports.handler = async (event) => {
-  const baseURL = process.env.BASE_URL;
+  const domain = process.env.DOMAIN;
 
   try {
     for (const record of event.Records) {
       const snsMessage = JSON.parse(record.Sns.Message);
       const userEmail = snsMessage.user_email;
-      const userId = snsMessage.user_id;
+      const token = snsMessage.token;
+      const endpoint = snsMessage.endpoint;
 
-      const verificationLink = `http://${baseURL}/v1/user/self/verify?token=${userId}`;
+      const verificationLink = `http://${domain}${endpoint}?token=${token}`;
 
       const msg = {
         to: userEmail,
-        from: `noreply@${baseURL}`,
+        from: `no-reply@${domain}`,
         subject: "CSYE6225 Webapp - Verify Your Email",
         html: `<p>Dear User,<br>Please verify your email by <a href="${verificationLink}">clicking here</a>. This link expires in 2 minutes.
         <br><br>Thanks, <br>
